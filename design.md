@@ -517,76 +517,99 @@ graph TB
 > **Step-by-step flow of creating and distributing content**
 
 ```mermaid
-stateDiagram-v2
-    [*] --> UserRequest: User initiates content creation
+flowchart TD
+    Start([🚀 Start]) --> UserRequest[👤 User Initiates<br/>Content Creation]
     
-    UserRequest --> IntentAnalysis: Analyze request
-    IntentAnalysis --> ScheduleCheck: Check timeline
+    UserRequest --> IntentAnalysis[🔍 Intent Analysis<br/>Understand request]
+    IntentAnalysis --> ScheduleCheck[📅 Schedule Check<br/>Verify timeline]
     
-    ScheduleCheck --> PromptGeneration: Generate prompts
-    PromptGeneration --> ResearchPhase: Gather inspiration
+    ScheduleCheck --> PromptGen[🤖 Prompt Generation<br/>Create context-aware prompts]
+    PromptGen --> Research[🔍 Research Phase]
     
-    state ResearchPhase {
-        [*] --> WebSearch
-        [*] --> TrendAnalysis
-        [*] --> MoodBoard
-        WebSearch --> Aggregation
-        TrendAnalysis --> Aggregation
-        MoodBoard --> Aggregation
-        Aggregation --> [*]
-    }
+    Research --> WebSearch[🌐 Web Search]
+    Research --> TrendAnalysis[📊 Trend Analysis]
+    Research --> MoodBoard[🎨 Mood Board Creation]
     
-    ResearchPhase --> VoiceAnalysis: Apply user style
-    VoiceAnalysis --> ContentGeneration: Generate options
+    WebSearch --> Aggregate[📦 Aggregate Results]
+    TrendAnalysis --> Aggregate
+    MoodBoard --> Aggregate
     
-    state ContentGeneration {
-        [*] --> Option1
-        [*] --> Option2
-        [*] --> Option3
-        Option1 --> [*]
-        Option2 --> [*]
-        Option3 --> [*]
-    }
+    Aggregate --> VoiceAnalysis[🎭 Voice Analysis<br/>Apply user style]
+    VoiceAnalysis --> ContentGen[✨ Content Generation]
     
-    ContentGeneration --> UserReview: Present to user
+    ContentGen --> Option1[📝 Option 1]
+    ContentGen --> Option2[📝 Option 2]
+    ContentGen --> Option3[📝 Option 3]
     
-    state UserReview {
-        [*] --> Evaluate
-        Evaluate --> Approve: ✅ Accept
-        Evaluate --> Edit: ✏️ Modify
-        Evaluate --> Reject: ❌ Decline
-        Edit --> Approve
-        Reject --> ContentGeneration: Regenerate
-    }
+    Option1 --> UserReview{👤 User Review<br/>━━━━━━━━━━<br/>Human Decision Point}
+    Option2 --> UserReview
+    Option3 --> UserReview
     
-    UserReview --> PlatformAdaptation: Adapt for platforms
+    UserReview -->|✅ Approve| PlatformAdapt[🌐 Platform Adaptation]
+    UserReview -->|✏️ Edit| EditContent[✏️ User Edits]
+    UserReview -->|❌ Reject| ContentGen
     
-    state PlatformAdaptation {
-        [*] --> Blog
-        [*] --> Social
-        [*] --> Email
-        [*] --> Newsletter
-        Blog --> [*]
-        Social --> [*]
-        Email --> [*]
-        Newsletter --> [*]
-    }
+    EditContent --> PlatformAdapt
     
-    PlatformAdaptation --> Distribution: Schedule & publish
-    Distribution --> FeedbackCollection: Collect metrics
-    FeedbackCollection --> Learning: Update models
-    Learning --> [*]: Complete
+    PlatformAdapt --> Blog[📰 Blog Format]
+    PlatformAdapt --> Social[📱 Social Media]
+    PlatformAdapt --> Email[📧 Email Format]
+    PlatformAdapt --> Newsletter[📬 Newsletter]
     
-    note right of UserReview
-        Human-in-the-loop
-        decision point
-    end note
+    Blog --> Distribution[🚀 Distribution<br/>Schedule & Publish]
+    Social --> Distribution
+    Email --> Distribution
+    Newsletter --> Distribution
     
-    note right of Learning
-        Continuous improvement
-        from user feedback
-    end note
+    Distribution --> Feedback[📊 Feedback Collection<br/>Collect metrics]
+    Feedback --> Learning[🧠 Learning<br/>Update models]
+    Learning --> End([✅ Complete])
+    
+    Learning -.->|Improve| ContentGen
+    
+    style Start fill:#667eea,stroke:#764ba2,stroke-width:3px,color:#fff
+    style UserRequest fill:#4facfe,stroke:#00f2fe,stroke-width:2px,color:#fff
+    style IntentAnalysis fill:#4facfe,stroke:#00f2fe,stroke-width:2px,color:#fff
+    style ScheduleCheck fill:#4facfe,stroke:#00f2fe,stroke-width:2px,color:#fff
+    style PromptGen fill:#667eea,stroke:#764ba2,stroke-width:2px,color:#fff
+    style Research fill:#f093fb,stroke:#f5576c,stroke-width:2px,color:#fff
+    style WebSearch fill:#ffd43b,stroke:#fab005,stroke-width:2px,color:#000
+    style TrendAnalysis fill:#ffd43b,stroke:#fab005,stroke-width:2px,color:#000
+    style MoodBoard fill:#ffd43b,stroke:#fab005,stroke-width:2px,color:#000
+    style Aggregate fill:#ffd43b,stroke:#fab005,stroke-width:2px,color:#000
+    style VoiceAnalysis fill:#667eea,stroke:#764ba2,stroke-width:2px,color:#fff
+    style ContentGen fill:#43e97b,stroke:#38f9d7,stroke-width:2px,color:#fff
+    style Option1 fill:#51cf66,stroke:#2b8a3e,stroke-width:2px,color:#fff
+    style Option2 fill:#51cf66,stroke:#2b8a3e,stroke-width:2px,color:#fff
+    style Option3 fill:#51cf66,stroke:#2b8a3e,stroke-width:2px,color:#fff
+    style UserReview fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px,color:#fff
+    style EditContent fill:#ffd43b,stroke:#fab005,stroke-width:2px,color:#000
+    style PlatformAdapt fill:#667eea,stroke:#764ba2,stroke-width:2px,color:#fff
+    style Blog fill:#4facfe,stroke:#00f2fe,stroke-width:2px,color:#fff
+    style Social fill:#4facfe,stroke:#00f2fe,stroke-width:2px,color:#fff
+    style Email fill:#4facfe,stroke:#00f2fe,stroke-width:2px,color:#fff
+    style Newsletter fill:#4facfe,stroke:#00f2fe,stroke-width:2px,color:#fff
+    style Distribution fill:#43e97b,stroke:#38f9d7,stroke-width:2px,color:#fff
+    style Feedback fill:#f093fb,stroke:#f5576c,stroke-width:2px,color:#fff
+    style Learning fill:#ff8787,stroke:#fa5252,stroke-width:2px,color:#fff
+    style End fill:#667eea,stroke:#764ba2,stroke-width:3px,color:#fff
 ```
+
+**Key Workflow Stages:**
+
+| Stage | Description | Output |
+|-------|-------------|--------|
+| 🔍 **Intent Analysis** | Understand user's creative goals | Structured request |
+| 📅 **Schedule Check** | Verify timeline and deadlines | Optimal timing |
+| 🤖 **Prompt Generation** | Create context-aware prompts | Multiple prompt options |
+| 🔍 **Research Phase** | Gather inspiration and trends | Curated research |
+| 🎭 **Voice Analysis** | Apply user's creative style | Style parameters |
+| ✨ **Content Generation** | Generate multiple options | 3 content alternatives |
+| 👤 **User Review** | Human decision point | Approved content |
+| 🌐 **Platform Adaptation** | Format for each platform | Platform-specific versions |
+| 🚀 **Distribution** | Schedule and publish | Published content |
+| 📊 **Feedback Collection** | Gather performance metrics | Analytics data |
+| 🧠 **Learning** | Update models with feedback | Improved system |
 
 ### 2.2 🤔 Why Agent-Based Architecture?
 
